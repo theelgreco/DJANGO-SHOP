@@ -4,16 +4,20 @@ const path = require('path')
 const pages = {
   'all_products': {
     entry: './src/pages/products/all_products.js',
-    chunks: ['chunk-vendor']
+    chunks: ['chunk-vendors']
   }
 }
 
 module.exports = {
+  devServer: {
+    hot: true
+  },
   pages: pages,
+  filenameHashing: false,
   productionSourceMap: false,
   publicPath: 'http://localhost:8080/',
   outputDir: './dev-resources/',
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     config.module.rules.delete('eslint')
     config.optimization.splitChunks({
       cacheGroups: {
@@ -35,5 +39,13 @@ module.exports = {
       filename: 'webpack-stats.json'
     }])
     config.resolve.alias.set('__STATIC__', 'static')
+    config.devServer
+        .public('http://localhost:8080')
+        .host('localhost')
+        .port(8080)
+        .hotOnly(true)
+        .watchOptions({poll:1000})
+        .https(false)
+        .headers({'Allow-Control-Allow-Origin': ['*']})
   }
 }
