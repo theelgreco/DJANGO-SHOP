@@ -9,8 +9,10 @@ const pages = {
 }
 
 module.exports = {
-  transpileDependencies: true,
   pages: pages,
+  productionSourceMap: false,
+  publicPath: 'http://localhost:8080/',
+  outputDir: './dev-resources/',
   chainWebpack: config => {
     config.module.rules.delete('eslint')
     config.optimization.splitChunks({
@@ -29,9 +31,9 @@ module.exports = {
       config.plugins.delete(`prefetch-${page}`)
     })
     config.plugin('BundleTracker').use(BundleTracker, [{
+      path: __dirname,
       filename: 'webpack-stats.json'
     }])
     config.resolve.alias.set('__STATIC__', 'static')
-
   }
 }
