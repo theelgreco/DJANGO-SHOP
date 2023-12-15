@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load render_bundle from webpack_loader %}
+
+{% block title %} Products{% endblock %}
+
+{% block content %}
+    <div id="app">
+        <app></app>
+    </div>
+    {{ block.super }}
+    {% render_bundle 'chunk_vendors' %}
+    {% render_bundle 'self_upload_scheme' %}
+{% endblock %}
