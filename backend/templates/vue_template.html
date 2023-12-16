@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 {% load render_bundle from webpack_loader %}
 
-{% block title %} Products{% endblock %}
+{% block title %} {{ page_dict.page_title }}{% endblock %}
 
 {% block content %}
     <div id="app">
         <app></app>
     </div>
+{% endblock %}
+
+{% block scripts %}
     {{ block.super }}
     {% render_bundle 'chunk-vendors' %}
-    {% render_bundle 'all_products' %}
+    {% render_bundle page_dict.vue_file_name %}
 {% endblock %}
